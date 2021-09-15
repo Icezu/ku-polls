@@ -37,6 +37,54 @@ class QuestionModelTests(TestCase):
         recent_question = Question(pub_date=time)
         self.assertIs(recent_question.was_published_recently(), True)
     
+    def test_is_published_with_current_date(self):
+        """
+        is_published() return True if current date is on publication date.
+        """
+        time = timezone.now()
+        current_question = Question(pub_date=time)
+        self.assertIs(current_question.is_published(), True)
+
+    def test_is_published_with_future_question(self):
+        """
+        is_published() return False if the polls publish date is in the future. 
+        """
+        time = timezone.now() + datetime.timedelta(days=5)
+        future_question = Question(pub_date=time)
+        self.assertIs(future_question.is_published(), False)
+
+    def test_is_published_after_publication_date(self):
+        """
+        is_published() return True if the polls is published after published date.   
+        """
+        time = timezone.now() - datetime.timedelta(days=3)
+        past_question = Question(pub_date=time)
+        self.assertIs(past_question.is_published(), True)
+
+    def test_can_vote_before_published_date(self):
+        """
+        can_vote() return False if voting is allowed before the poll is published.
+        """
+        time = timezone.now() + datetime.timedelta(days=5)
+        future_polls = Question(pub_date=time)
+        self.assertIs(future_polls.can_vote(), False)
+
+    def test_can_vote_during_published_date(self):
+        """
+        can_vote() return True if voting is allowed during the poll published and end date. 
+        """
+        time = timezone.now() - datetime.timedelta(days=2)
+        current_poll = Question(pub_date=time, end_date=timezone.now() + datetime.timedelta(days=3))
+        self.assertIs(current_poll.can_vote(), True)
+
+    def test_can_vote_after_end_date(self):
+        """
+        can_vote() return False if voting is allowed after the poll has ended.
+        """ 
+        time = timezone.now() - datetime.timedelta(days=2)
+        ended_poll = Question(pub_date=time, end_date=timezone.now() - datetime.timedelta(days=1))
+        self.assertIs(ended_poll.can_vote(), False)
+
 def create_question(question_text, days):
     """ 
     Create a question with the given 'question_text' and published the
