@@ -1,10 +1,11 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 
 # Create your views here.
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
+from django.contrib import messages
 
 from .models import Choice, Question
 
@@ -47,3 +48,10 @@ def vote(request, question_id):
         selected_choice.votes += 1
         selected_choice.save()
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+def vote_poll_error(request, pk):
+    question = get_object_or_404(Question, pk=pk)
+    if not question.can_vote():
+        messages.error(request, "Cannot vote this poll!")
+        return redirect('polls:index')    
+    return render(request, 'polls/detail.html', {'question': question})
