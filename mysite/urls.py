@@ -24,3 +24,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 ]
 # + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+# the code comment above is for load static to load faster

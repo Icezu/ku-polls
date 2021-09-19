@@ -25,7 +25,7 @@ class Question(models.Model):
     
     def can_vote(self):
         now = timezone.now()
-        return now <= self.end_date and self.is_published()
+        return self.pub_date <= timezone.now() <= self.end_date and self.is_published()
 
     def __str__(self):
         return self.question_text
