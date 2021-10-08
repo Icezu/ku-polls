@@ -1,13 +1,14 @@
 from django.shortcuts import get_object_or_404, render, redirect
 
 # Create your views here.
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.contrib import messages
 
 from .models import Choice, Question
+
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
@@ -21,6 +22,7 @@ class IndexView(generic.ListView):
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')[:5]
 
+
 class DetailView(generic.DetailView):
     model = Question
     template_name = 'polls/detail.html'
@@ -31,9 +33,11 @@ class DetailView(generic.DetailView):
         """
         return Question.objects.filter(pub_date__lte=timezone.now())
 
+
 class ResultsView(generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
+
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
@@ -47,11 +51,13 @@ def vote(request, question_id):
     else:
         selected_choice.votes += 1
         selected_choice.save()
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+        return HttpResponseRedirect(reverse('polls:results',
+                                            args=(question.id,)))
+
 
 def vote_poll_error(request, pk):
     question = get_object_or_404(Question, pk=pk)
     if not question.can_vote():
         messages.error(request, "Cannot vote this poll!")
-        return redirect('polls:index')    
+        return redirect('polls:index')
     return render(request, 'polls/detail.html', {'question': question})

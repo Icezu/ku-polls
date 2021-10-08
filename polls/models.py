@@ -3,8 +3,8 @@ from django.db import models
 # Create your models here.
 import datetime
 
-from django.db import models
 from django.utils import timezone
+
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
@@ -12,9 +12,9 @@ class Question(models.Model):
     end_date = models.DateTimeField('end_date')
 
     def was_published_recently(self):
-        now = timezone.now()    
+        now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
-    
+
     was_published_recently.admin_order_field = 'pub_date'
     was_published_recently.boolean = True
     was_published_recently.short_description = 'Published recently?'
@@ -22,13 +22,14 @@ class Question(models.Model):
     def is_published(self):
         now = timezone.now()
         return self.pub_date <= now
-    
+
     def can_vote(self):
         now = timezone.now()
-        return self.pub_date <= timezone.now() <= self.end_date and self.is_published()
+        return self.pub_date <= now <= self.end_date and self.is_published()
 
     def __str__(self):
         return self.question_text
+
 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
