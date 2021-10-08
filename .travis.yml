@@ -11,3 +11,7 @@ install:
 # script to run tests. Script can have many commands, one per line.
 script: 
   - coverage run manage.py test
+
+# send result to codecov
+after_script:
+  - bash <(curl -s https://codecov.io/bash)
