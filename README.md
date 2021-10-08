@@ -17,3 +17,6 @@ A web application for conducting polls at [Kasetsart University](https://www.ku.
 [Iteration 1](../../wiki/Iteration1)
 
 [Iteration 2](../../wiki/Iteration2)
+
+# Codecov Report
+https://app.codecov.io/gh/Icezu/ku-polls
