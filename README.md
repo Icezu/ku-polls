@@ -1,5 +1,4 @@
 [![Build Status](https://app.travis-ci.com/Icezu/ku-polls.svg?branch=iteration2)](https://app.travis-ci.com/Icezu/ku-polls)
-
 [![codecov](https://codecov.io/gh/Icezu/ku-polls/branch/main/graph/badge.svg?token=LPFDR4Q691)](https://codecov.io/gh/Icezu/ku-polls)
 # KU Polls
 
