@@ -23,6 +23,7 @@ def create_question(question_text, start, end):
 
 
 class QuestionModelTests(TestCase):
+    """Tests for Django model."""
 
     def test_was_published_recently_with_future_question(self):
         """
@@ -111,6 +112,8 @@ class QuestionModelTests(TestCase):
 
 
 class QuestionIndexViewTests(TestCase):
+    """Tests for index page."""
+
     def test_no_questions(self):
         """If no questions exist, an appropriate message is displayed."""
         response = self.client.get(reverse('polls:index'))
@@ -165,6 +168,8 @@ class QuestionIndexViewTests(TestCase):
 
 
 class QuestionDetailViewTests(TestCase):
+    """Tests for detail page"""
+
     def test_future_question(self):
         """
         The detail view of a question with a pub_date in the future
