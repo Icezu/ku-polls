@@ -12,7 +12,7 @@ class ChoiceInline(admin.TabularInline):
 
 class QuestionAdmin(admin.ModelAdmin):
     """Question object config in Django admin page."""
-    
+
     fieldsets = [
         (None,               {'fields': ['question_text']}),
         ('Publish Date information', {'fields': ['pub_date'],
