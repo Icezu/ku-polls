@@ -10,4 +10,4 @@ omit =
     templates/*
     polls/templates/polls/*
     polls/static/*
-
+    manage.py
