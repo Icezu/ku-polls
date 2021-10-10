@@ -7,7 +7,9 @@ cover_pylib = False
 omit =
     polls/tests.py
     polls/migrations/*
+    manage.py
+    # Ignore HTML file
     templates/*
     polls/templates/polls/*
+    # Ignore css and images file
     polls/static/*
-    manage.py
