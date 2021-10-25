@@ -8,7 +8,7 @@ from django.utils import timezone
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
-from .models import Choice, Question
+from .models import Choice, Question, Vote
 
 
 class IndexView(generic.ListView):
@@ -53,10 +53,35 @@ def vote(request, question_id):
             'error_message': "You didn't select a choice.",
         })
     else:
-        selected_choice.votes += 1
-        selected_choice.save()
+        # get previous vote from user
+        user = request.user
+        vote = get_vote_for_user(user, question)
+        # case 1: user has not voted for this poll question yet
+        # Create a new vote object
+        if not vote:
+            vote = Vote(user=user, choice=selected_choice)
+        else:
+            # case 2: user has already vote
+            # Modify the existing vote and save it
+            vote.choice = selected_choice
+        vote.save()
         return HttpResponseRedirect(reverse('polls:results',
                                             args=(question.id,)))
+
+
+def get_vote_for_user(user, poll_question):
+    """Find and return an existing vote for a user on a poll question.
+
+    Returns:
+        The user's Vote or None if no vote for this poll_question
+    """
+    votes = Vote.objects.filter(user=user)\
+                .filter(choice__question=poll_question)
+    # should be at most one Vote
+    if votes.count() == 0:
+        return None
+    else:
+        return votes[0]
 
 
 def vote_poll_error(request, pk):
