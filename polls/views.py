@@ -24,6 +24,22 @@ class IndexView(generic.ListView):
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')[:5]
 
+@login_required
+def vote_poll_error(request, pk):
+    """
+    Return a detail page if there're no errors or
+    index page if there's error.
+    """
+    question = get_object_or_404(Question, pk=pk)
+    user = request.user
+    vote = get_vote_for_user(user, question)
+    if not question.can_vote():
+        messages.error(request, "Cannot vote this poll!")
+        return redirect('polls:index')
+    if vote is None:
+        return render(request, 'polls/detail.html', {'question': question, 'current_choice': vote})
+    else:
+        return render(request, 'polls/detail.html', {'question': question, 'current_choice': vote.choice})
 
 # class DetailView(generic.DetailView):
 #     """View detail page."""
@@ -34,8 +50,6 @@ class IndexView(generic.ListView):
 #         """Excludes any questions that aren't published yet."""
 #         return Question.objects.filter(pub_date__lte=timezone.now())
     
-
-
 
 class ResultsView(generic.DetailView):
     """View result page."""
@@ -77,24 +91,10 @@ def get_vote_for_user(user, poll_question):
     Returns:
         The user's Vote or None if no vote for this poll_question
     """
-    votes = Vote.objects.filter(user=user)\
-                .filter(choice__question=poll_question)
+    votes = Vote.objects.filter(user=user).filter(choice__question=poll_question)
     # should be at most one Vote
     if votes.count() == 0:
         return None
     else:
         return votes[0]
 
-
-def vote_poll_error(request, pk):
-    """
-    Return a detail page if there're no errors or
-    index page if there's error.
-    """
-    question = get_object_or_404(Question, pk=pk)
-    user = request.user
-    vote = get_vote_for_user(user, question)
-    if not question.can_vote():
-        messages.error(request, "Cannot vote this poll!")
-        return redirect('polls:index')
-    return render(request, 'polls/detail.html', {'question': question, 'current_choice': vote.choice})
