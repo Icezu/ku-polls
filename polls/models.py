@@ -67,4 +67,4 @@ class Vote(models.Model):
     choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"Vote by {self.user.name} for {self.choice.choice_text}."
+        return f"Vote by {self.user.name} for {self.choice.choice_text} on question {self.choice.question} "

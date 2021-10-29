@@ -25,14 +25,16 @@ class IndexView(generic.ListView):
         ).order_by('-pub_date')[:5]
 
 
-class DetailView(generic.DetailView):
-    """View detail page."""
-    model = Question
-    template_name = 'polls/detail.html'
+# class DetailView(generic.DetailView):
+#     """View detail page."""
+#     model = Question
+#     template_name = 'polls/detail.html'
 
-    def get_queryset(self):
-        """Excludes any questions that aren't published yet."""
-        return Question.objects.filter(pub_date__lte=timezone.now())
+#     def get_queryset(self):
+#         """Excludes any questions that aren't published yet."""
+#         return Question.objects.filter(pub_date__lte=timezone.now())
+    
+
 
 
 class ResultsView(generic.DetailView):
@@ -90,7 +92,9 @@ def vote_poll_error(request, pk):
     index page if there's error.
     """
     question = get_object_or_404(Question, pk=pk)
+    user = request.user
+    vote = get_vote_for_user(user, question)
     if not question.can_vote():
         messages.error(request, "Cannot vote this poll!")
         return redirect('polls:index')
-    return render(request, 'polls/detail.html', {'question': question})
+    return render(request, 'polls/detail.html', {'question': question, 'current_choice': vote.choice})
