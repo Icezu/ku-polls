@@ -1,0 +1,142 @@
+[
+{
+  "model": "polls.question",
+  "pk": 2,
+  "fields": {
+    "question_text": "Would you rather have a time machine that can only go back in time or one that can only go forward in time?",
+    "pub_date": "2021-09-04T14:13:41Z",
+    "end_date": "2021-12-09T18:16:24Z"
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 4,
+  "fields": {
+    "question_text": "Are you an early bird or a night owl?",
+    "pub_date": "2021-11-01T16:59:25Z",
+    "end_date": "2021-10-13T18:16:24Z"
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 6,
+  "fields": {
+    "question_text": "Who is the richer person?",
+    "pub_date": "2021-10-29T15:58:11Z",
+    "end_date": "2021-11-10T15:58:07Z"
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 7,
+  "fields": {
+    "question_text": "Who is the best MCU character?",
+    "pub_date": "2021-10-29T22:09:24Z",
+    "end_date": "2021-11-09T22:09:30Z"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 7,
+  "fields": {
+    "question": 2,
+    "choice_text": "Back in time"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 8,
+  "fields": {
+    "question": 2,
+    "choice_text": "Forward in time"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 9,
+  "fields": {
+    "question": 6,
+    "choice_text": "Elon Musk"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 10,
+  "fields": {
+    "question": 6,
+    "choice_text": "Bill Gate"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 11,
+  "fields": {
+    "question": 6,
+    "choice_text": "Tony Stark"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 12,
+  "fields": {
+    "question": 7,
+    "choice_text": "Spiderman"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 13,
+  "fields": {
+    "question": 7,
+    "choice_text": "Ironman"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 14,
+  "fields": {
+    "question": 7,
+    "choice_text": "Captain America"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 17,
+  "fields": {
+    "question": 4,
+    "choice_text": "Early bird"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 18,
+  "fields": {
+    "question": 4,
+    "choice_text": "Night owl"
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "choice": 9
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 2,
+  "fields": {
+    "user": 1,
+    "choice": 12
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 4,
+  "fields": {
+    "user": 1,
+    "choice": 7
+  }
+}
+]
